@@ -186,7 +186,7 @@
       },
       "properties": {
         "platformFaultDomainCount": "2",
-        "platformUpdateDomainCount": "6"
+        "platformUpdateDomainCount": "4"
       }
     },
     {
