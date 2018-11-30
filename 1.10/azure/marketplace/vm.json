@@ -86,7 +86,7 @@
     "threeDotSubnetPrivate": "[take(parameters('ipAddress'), add(1, lastIndexOf(parameters('ipAddress'), '.')))]",
     "startOctet": "[int(skip(parameters('ipAddress'), add(1, lastIndexOf(parameters('ipAddress'), '.'))))]",
     "startOctetPlus1": "[add(1, variables('startOctet'))]",
-
+    "uniqueStorageAccountName": "[concat(subscription().subscriptionId, deployment().name, subscription().tenantId)]",
     "uniqueString": "[concat(subscription().subscriptionId, deployment().name, subscription().tenantId)]",
     "unusedPassword": "[concat('A@l5', uniqueString(resourceGroup().id, variables('uniqueString')))]",
 
@@ -190,6 +190,15 @@
       }
     },
     {
+      "apiVersion": "[variables('computeApiVersion')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[tolower(variables('uniqueStorageAccountName'))]",
+      "location": "[variables('location')]",
+      "properties": {
+        "accountType": "[parameters('diskType')]"
+      }
+    },
+    {
       "apiVersion": "[variables('networkApiVersion')]",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(parameters('maprnicName'), '0')]",
@@ -253,7 +262,8 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('maprnicName'), '0'))]",
-        "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
+        "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/',variables('uniqueStorageAccountName'))]"
       ],
       "plan": "[parameters('plan')]",
       "tags": {
@@ -293,6 +303,12 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('maprnicName'), '0'))]"
             }
           ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[reference(concat('Microsoft.Storage/storageAccounts/', variables('uniqueStorageAccountName')),variables('computeApiVersion')).primaryEndpoints.blob]"
+          }
         }
       },
       "resources": [{
