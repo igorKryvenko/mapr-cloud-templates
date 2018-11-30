@@ -193,7 +193,7 @@
       "apiVersion": "[variables('computeApiVersion')]",
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[tolower(variables('uniqueStorageAccountName'))]",
-      "location": "[variables('location')]",
+      "location": "[parameters('location')]",
       "properties": {
         "accountType": "[parameters('diskType')]"
       }
