@@ -76,7 +76,7 @@
     }
   },
   "variables": {
-    "computeApiVersion": "2018-06-01",
+    "computeApiVersion": "2018-05-01",
     "networkApiVersion": "2018-07-01",
     "nodeCountSansInstaller": "[sub(parameters('nodeCount'), 1)]",
     "nonDotClusterName": "[replace(parameters('clusterName'), '.', '-')]",
