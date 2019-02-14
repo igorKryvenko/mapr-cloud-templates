@@ -76,8 +76,9 @@
     }
   },
   "variables": {
-    "computeApiVersion": "2018-05-01",
+    "computeApiVersion": "2018-06-01",
     "networkApiVersion": "2018-07-01",
+    "storageApiVersion": "2018-07-01",
     "nodeCountSansInstaller": "[sub(parameters('nodeCount'), 1)]",
     "nonDotClusterName": "[replace(parameters('clusterName'), '.', '-')]",
 
@@ -191,7 +192,7 @@
       }
     },
     {
-      "apiVersion": "[variables('computeApiVersion')]",
+      "apiVersion": "[variables('storageApiVersion')]",
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[tolower(variables('uniqueStorageAccountName'))]",
       "location": "[parameters('location')]",
