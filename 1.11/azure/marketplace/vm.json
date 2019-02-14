@@ -89,7 +89,7 @@
     "startOctetPlus1": "[add(1, variables('startOctet'))]",
 
     "uniqueString": "[concat(subscription().subscriptionId, deployment().name, subscription().tenantId)]",
-    "uniqueStorageAccountName": "[concat(subscription().subscriptionId, deployment().name, subscription().tenantId)]",
+    "uniqueStorageAccountName": "[concat(variables('nonDotClusterName'), '-sa')]",
     "unusedPassword": "[concat('A@l5', uniqueString(resourceGroup().id, variables('uniqueString')))]",
 
     "linuxConfiguration": {
